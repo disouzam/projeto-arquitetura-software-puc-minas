@@ -26,7 +26,9 @@ O ERP TOTVS suporta diversos tipos de autenticação conforme consulta feita via
 
 \* Fontes primárias não foram localizadas para confirmar a autenticidade dessa tabela
 
+O sistema de LMS Canvas, da Instructure, suporta, segundo sua documentação, diversos provedores de identidade e diversos protocolos de autenticação / autorização e gestão de diretório (OAuth, LDAP, SAML). Um dos documentos consultados é a referência 8 da documentação da Instructure. Outros documentos estão disponíveis na referência 9 de documentos de integração. Essa diversidade de formas de integração traz flexibilidade do lado da plataforma Canvas.
 
+Assim, temos de um lado um sistema potencialmente incompatível com sistemas de autenticação moderna cuja saída será fornecida via fachada (sistema acadêmico legado em COBOL), o Canvas, aparentemente bastante flexível em alternativas, e o TOTVS com algumas possibilidades modernas mas sem uma documentação centralizada que forneça clareza para essa decisão. Note no entanto que essa descrição ainda não define a solução, passo que será dado a seguir.
 
 ## Decisão
 
@@ -38,9 +40,12 @@ O que se torna mais fácil ou mais difícil de fazer e quaisquer riscos introduz
 
 ## Referências
 
-1. [How To | Tipos de autenticação e consumo de Web Services e APIs](https://youtu.be/jEihJwXyxTs) do canal TOTVS Gestão no YouTube
-2. [How To | Configuração para disponibilização de Web Services e APIs](https://www.youtube.com/watch?v=gPSY1_xxKL4) do canal TOTVS Gestão no YouTube
+1. [Tipos de autenticação e consumo de Web Services e APIs](https://youtu.be/jEihJwXyxTs) do canal TOTVS Gestão no YouTube
+2. [Configuração para disponibilização de Web Services e APIs](https://www.youtube.com/watch?v=gPSY1_xxKL4) do canal TOTVS Gestão no YouTube
 3. [Token - 1.000](https://api.totvs.com.br/apidetails/Token_v1_000.json)
 4. [Autenticação do TOTVS Protheus na Base (parte 2)](https://base.com/pt-BR/ajuda/knowledgebase/autenticacao-do-totvs-protheus-na-base-parte-2/)
 5. [As diferenças entre autenticação e autorização no desenvolvimento de software](https://dnxbrasil.com/autenticacao-e-autorizacao-no-desenvolvimento-de-software/)
 6. [Autenticação e Autorização](https://profbruno-ufc-qx.github.io/2024.2-fundamentals-of-web-programming/assets/downloads/15-Autentica%C3%A7%C3%A3o-e-Autoriza%C3%A7%C3%A3o.pdf) por professor Bruno Góis Mateus, Universidade Federal do Ceará
+7. [Modern Authentication - Autorização e Autenticação: conceitos e aplicações na plataforma Entra ID](https://techcommunity.microsoft.com/blog/desenvolvedoresbr/modern-authentication---autoriza%C3%A7%C3%A3o-e-autentica%C3%A7%C3%A3o-conceitos-e-aplica%C3%A7%C3%B5es-na-pla/4277388) por Pedro Soucheff
+8. [Configuring Microsoft OAuth for Canvas Authentication](https://community.instructure.com/en/kb/articles/606219-configuring-microsoft-oauth-for-canvas-authentication)
+9. [Canvas Integration Documents](https://community.instructure.com/en/kb/categories/475-canvas-integration-documents)
