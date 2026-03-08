@@ -12,3 +12,8 @@ Nesse repositório serão, inicialmente, escritas duas ADRs, como são commument
 
 - ADR-003 – Estratégia de Identidade, Autenticação e Autorização, incluindo SSO
 - ADR-004 – Estratégia de Governança, Proteção e Auditoria de Dados
+
+# Referências
+
+- Blog post do Michael Nygard sobre os registros de decisão arquitetural, de 15 de Novembro de 2011: [Documenting Architecture Decisions](https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions)
+- Repositório do professor Marco Mendes: [Conjunto de recursos para a preparação de um projeto de arquitetura de software](https://github.com/marco-mendes/projeto-arquitetura-software)
