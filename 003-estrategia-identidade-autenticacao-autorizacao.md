@@ -1,6 +1,7 @@
 # 003. Estratégia de Identidade, Autenticação e Autorização, incluindo SSO
 
 Data: 2026-03-08
+
 Autor: Dickson Souza em nome do Grupo 1
 
 ## Status
