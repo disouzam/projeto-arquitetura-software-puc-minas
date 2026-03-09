@@ -32,7 +32,22 @@ Assim, temos de um lado um sistema potencialmente incompatível com sistemas de 
 
 ## Decisão
 
-A mudança que estamos propondo ou concordamos em implementar.
+Como o Sistema Acadêmico Modernizado será hospedado em recursos de computação em nuvem seja da AWS ou da Azure (ou mesmo ambos para redundância e gestão de custos) é sensato escolher um provedor de identidade hospedado ou compatível com ambas.
+
+Como as opções são bastante amplas nesse segmento de tecnologias e a gestão independente pode gerar uma demanda extra para os times de tecnologia, soluções que necessitam de provisionamento e configuração especializada como o IdentityServer não serão consideradas, além do fato de não ser mais uma solução gratuita e open source, removendo o apelo para esse tipo bastante robusto de solução.
+
+Soluções de terceiros como a Okta também não serão inicialmente consideradas pelas mesmas razões, além de adicionarem mais um provedor na cadeia de suprimentos da modernização do sistema acadêmico.
+
+Assim, esses argumentos nos levam para uma lista preliminar de dois candidatos: a família Microsoft Entra de produtos de identidade ou a família AWS Identity Services.
+
+O resumo oferecido pelo Copilot indica uma alta paridade de funcionalidades das duas soluções com favorecimento do Microsoft Entra ID com uma solução mais integrada em um único produto. Niraj Kumar fornece um resumo interessante (referência 11) da comparação entre as duas principais ferramentas:
+
+- Microsoft Entra ID is primarily an **`Identity Provider (IdP)`**. It was born from the enterprise directory (Active Directory).
+- AWS IAM is primarily an **`Access Management System`**. It was born from the API (infrastructure control).
+
+Sugere-se então adotar o Microsoft Entra ID como solução integrada de autenticação e autorização, oferecendo flexibilidade para as integrações com a fachada para o sistema acadêmico legado, ERP TOTVS e LMS Canvas. Como mencionado na seção sobre o contexto, deve-se iniciar o processo de implementação através da fachada. Esse processo requer o mapeamento dos papéis e permissões, usando principalmente o conceito RBAC (role-based access control), a serem expostos na fachada e que correspondam aos serviços atuais do sistema acadêmico legado.
+
+A integração via SSO no ERP TOTVS e LMS Canvas requer ajustes do lado dessas duas aplicações para processamento dos tokens gerados pelo Microsoft Entra ID. Os ajustes incluem o processamento de tokens de acesso emitidos pelo Microsoft Entra ID com suas claims customizadas para as duas aplicações (ver referência 12) - abordagem recomendada por permitir a gestão centralizada de perfis de acesso apenas no Microsoft Entra ID.
 
 ## Consequências
 
@@ -49,3 +64,6 @@ O que se torna mais fácil ou mais difícil de fazer e quaisquer riscos introduz
 7. [Modern Authentication - Autorização e Autenticação: conceitos e aplicações na plataforma Entra ID](https://techcommunity.microsoft.com/blog/desenvolvedoresbr/modern-authentication---autoriza%C3%A7%C3%A3o-e-autentica%C3%A7%C3%A3o-conceitos-e-aplica%C3%A7%C3%B5es-na-pla/4277388) por Pedro Soucheff
 8. [Configuring Microsoft OAuth for Canvas Authentication](https://community.instructure.com/en/kb/articles/606219-configuring-microsoft-oauth-for-canvas-authentication)
 9. [Canvas Integration Documents](https://community.instructure.com/en/kb/categories/475-canvas-integration-documents)
+10. [Comparar soluções de gerenciamento de identidade do AWS e do Azure](https://learn.microsoft.com/pt-br/azure/architecture/aws-professional/security-identity)
+11. [The Definitive Comparision Guide: Microsoft Entra ID vs. AWS IAM](https://towardsaws.com/the-definitive-comparision-guide-microsoft-entra-id-vs-aws-iam-afdc036b6fca)
+12. [Understanding OAuth 2 Access Token Claims](https://www.cerberauth.com/blog/oauth2-access-token-claims/#custom-claims)
