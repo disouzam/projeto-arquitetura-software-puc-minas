@@ -13,7 +13,7 @@ O ponto central e mais complicado do padrão Strangler Fig (figueira estrangulad
 
 Hoje cada um dos três grandes sistemas (acadêmico, ERP e LMS) contam com suas próprias soluções de autenticação e autorização, implicando em cadastros duplicados, senhas e mecanismos de proteção distintos - eventualmente conflitantes. Não existe integração entre sistemas de autorização e autenticação entre os sistemas, ou seja, usuários que necessitam dos 3 sistemas, por exemplo, técnicos administrativos precisam lidar com senhas e nomes de usuários diferentes em cada um deles, levando eventualmente à comportamentos inseguros como uso de mesmas senhas nos diferentes sistemas para facilitar a memorização e conferir rapidez de acesso.
 
-Embora o sistema COBOL seja o menos adaptado a sistemas de autenticação e autorização modernos, essa não é uma preocupação relevante visto que a fachada será responsável por intermediar essa responsabilidade durante a transição para o Sistema Acadêmico modernizado.
+Embora o sistema COBOL seja o menos adaptado a sistemas de autenticação e autorização modernos, essa não é uma preocupação relevante visto que a fachada será responsável por intermediar essa responsabilidade durante a transição para o Sistema Acadêmico Modernizado.
 
 O ERP TOTVS suporta diversos tipos de autenticação conforme consulta feita via Copilot integrado ao navegador e suportado parcialmente pelas referências 1 a 4 listadas no final desse ADR. Os detalhes específicos podem variar de acordo com a versão do ERP e produto implementado (Protheus, RM ou Datasul). Nesse estágio da pesquisa de alternativas não se conseguiu localizar uma referência centralizada da própria TOTVS. O sumário produzido pelo Copilot segue abaixo para referência inicial apenas.
 
@@ -51,7 +51,33 @@ A integração via SSO no ERP TOTVS e LMS Canvas requer ajustes do lado dessas d
 
 ## Consequências
 
-O que se torna mais fácil ou mais difícil de fazer e quaisquer riscos introduzidos pela mudança que precisarão ser mitigados.
+O uso de uma plataforma especializada (no caso o Microsoft Entra ID mas poderia ser qualquer uma das alternativas citadas) confere o uso de soluções testadas e acreditadas pelo mercado e reduz a necessidade de construção de soluções caseiras de alta complexidade porém de baixa qualidade. Isso aumenta consideravelmente o nível de segurança da aplicação como um todo, desde que boas práticas sejam seguidas na administração do diretório, como a política do menor nível de acesso possível (referência 13), granularidade adequada das permissões (ao invés de `application_1.do_everything`, usar `application_1.domain_2.read_all`), governança adequada, e também práticas seguras sejam adotadas na fachada e na posterior implementação do Sistema Acadêmico Modernizado. Armazenamento de senha, políticas de senhas, políticas de renovação, autenticação multi-fator, detecção de acesso fraudulento , dentre outros recursos são todas funcionalidades já disponíveis na solução.
+
+A primeira etapa de desenvolvimento que envolve a exposição da fachada para iniciar o desacoplamento do sistema acadêmico legado deve consumir o maior tempo devido à necessidade de criar a configuração de permissões que suporte o estado atual da aplicação (eventualmente em um estado não-ótimo).
+
+Uma consequência independente do sistema escolhido é a necessidade de especialistas para garantir o uso adequado da ferramenta. Um ou mais administrador do Microsoft Entra ID devem ser alocados para a operação e manutenção do sistema de identidade / autorização e autenticação.
+
+Já na questão custos, a solução da Microsoft pode ser mais custosa que suas alternativas mas é a que supostamente melhor atende o cenário da universidade.
+
+## Alternativas consideradas
+
+Embora já discutido ao longo do texto, segue aqui um resumo das alternativas consideradas para a decisão discutida anteriormente:
+
+1. Não fazer alterações e seguir com os sistemas de identidade independentes
+   1. Esse é o cenário base
+   2. Não alterar nada não é uma opção viável
+2. Implantar uma solução de identidade construída sobre medida como novo software
+   1. Alto risco de falhas de segurança pela falta de especialização dos times de desenvolvimento;
+   2. Longo tempo para obter uma solução adequada;
+   3. Compatibilidade com os padrões usados pelo ERP TOTVS e LMS Canvas - outro aspecto que requer especialistas
+3. Implementar o IdentityServer em infraestrutura dedicada na Azure ou AWS
+   1. Possivelmente mais barato
+   2. Mas mais limitado em recursos
+   3. Necessidade de especialistas para a implementação e suporte
+4. Usar o AWS Identity Services (incluindo o AWS IAM):
+   1. Necessidade de coordenação com múltiplas ferramentas em comparação com a oferta padrão do Microsoft Entra ID
+   2. Não permite gestão completa da infraestrutura do diretório da universidade
+   3. Gestão de potenciais recursos de infraestrutura na Azure fica comprometida
 
 ## Referências
 
@@ -67,3 +93,4 @@ O que se torna mais fácil ou mais difícil de fazer e quaisquer riscos introduz
 10. [Comparar soluções de gerenciamento de identidade do AWS e do Azure](https://learn.microsoft.com/pt-br/azure/architecture/aws-professional/security-identity)
 11. [The Definitive Comparision Guide: Microsoft Entra ID vs. AWS IAM](https://towardsaws.com/the-definitive-comparision-guide-microsoft-entra-id-vs-aws-iam-afdc036b6fca)
 12. [Understanding OAuth 2 Access Token Claims](https://www.cerberauth.com/blog/oauth2-access-token-claims/#custom-claims)
+13. [Enhance security with the principle of least privilege](https://learn.microsoft.com/en-us/entra/identity-platform/secure-least-privileged-access)
