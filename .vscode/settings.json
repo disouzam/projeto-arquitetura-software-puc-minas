@@ -1,5 +1,6 @@
 {
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,
-    "editor.trimWhitespaceOnDelete": true
+    "editor.trimWhitespaceOnDelete": true,
+    "editor.formatOnSave": true
 }
